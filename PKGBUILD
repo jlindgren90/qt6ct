@@ -14,16 +14,15 @@ depends=(gcc-libs
          qt6-svg)
 makedepends=(cmake
              qt6-tools)
-source=(https://github.com/trialuser02/qt6ct/releases/download/$pkgver/qt6ct-$pkgver.tar.xz)
-sha256sums=('0a9f00db7f9c2003b33fad1715cbf2a483bf50a99079b97bf8e5d0bdbd3392cd')
 
 build() {
-  cmake -B build -S $pkgname-$pkgver \
-    -DCMAKE_INSTALL_PREFIX=/usr
+  cd ..
+  cmake -B build -DCMAKE_INSTALL_PREFIX=/usr
   cmake --build build
 }
 
 package() {
+  cd ..
   DESTDIR="$pkgdir" cmake --install build
-  install -Dm644 $pkgname-$pkgver/COPYING "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+  install -Dm644 COPYING "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
